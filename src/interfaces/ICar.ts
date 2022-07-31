@@ -6,5 +6,7 @@ const carZodSchema = z.object({
   seatsQty: z.number().int().gte(2).lte(7),
 });
 
-export type ICar = z.infer<typeof vehicleZodSchema & typeof carZodSchema >;
-export { carZodSchema };
+const mergedSchema = carZodSchema.merge(vehicleZodSchema);
+
+export type ICar = z.infer<typeof mergedSchema>;
+export { mergedSchema };
