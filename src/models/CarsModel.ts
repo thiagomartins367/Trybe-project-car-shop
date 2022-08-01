@@ -15,7 +15,7 @@ const carsMongooseSchema = new Schema<CarsSchema>({
   doorsQty: Number,
   seatsQty: Number,
   __v: Number,
-});
+}, { versionKey: false });
 
 class CarsModel implements IModel<ICar> {
   constructor(
@@ -23,16 +23,7 @@ class CarsModel implements IModel<ICar> {
   ) {}
 
   public async create(body: ICar): Promise<ICar & IidDocument> {
-    const newCar: CarsSchema = (await this._model.create({ ...body })).toJSON();
-    const documentId = newCar._id;
-    delete newCar._id;
-    if (Object.keys(newCar).includes('__v')) {
-      delete newCar.__v;
-    }
-    return {
-      _id: documentId,
-      ...newCar,
-    };
+    return this._model.create({ ...body });
   }
 }
 
