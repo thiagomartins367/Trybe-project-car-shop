@@ -1,3 +1,4 @@
+import { ErrorTypes } from '../errors/catalog';
 import { mergedSchema, ICar } from '../interfaces/ICar';
 import { IModel } from '../interfaces/IModel';
 import IService from '../interfaces/IService';
@@ -13,8 +14,16 @@ class CarsService implements IService<ICar> {
     return this._carsModel.create(body);
   }
 
-  public async readAll(): Promise<ICar[] | []> {
-    return this._carsModel.readAll();
+  public async read(): Promise<ICar[] | []> {
+    return this._carsModel.read();
+  }
+
+  public async readOne(_id: string): Promise<ICar | null> {
+    const car = await this._carsModel.readOne(_id);
+    if (!car) {
+      throw new Error(ErrorTypes.ObjectNotFound);
+    }
+    return car;
   }
 }
 
