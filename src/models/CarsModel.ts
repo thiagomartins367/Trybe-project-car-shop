@@ -1,4 +1,9 @@
-import { model as mongooseCreateModel, Schema } from 'mongoose';
+import {
+  isValidObjectId,
+  model as mongooseCreateModel,
+  Schema,
+} from 'mongoose';
+import { ErrorTypes } from '../errors/catalog';
 import { ICar } from '../interfaces/ICar';
 import { IidDocument } from '../interfaces/IidDocument';
 import { IModel } from '../interfaces/IModel';
@@ -24,8 +29,13 @@ class CarsModel implements IModel<ICar> {
     return this._model.create({ ...body });
   }
 
-  public async readAll(): Promise<ICar[] | []> {
+  public async read(): Promise<ICar[] | []> {
     return this._model.find();
+  }
+
+  public async readOne(_id: string): Promise<ICar | null> {
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
+    return this._model.findById({ _id });
   }
 }
 
