@@ -2,7 +2,6 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import CarsModel from '../../../models/CarsModel';
 import { carMock, carMockWithId, invalidCarsMock } from '../mocks/carsMock';
-import { ICar } from '../../../interfaces/ICar';
 import CarsService from '../../../services/CarsService';
 const { expect } = chai;
 
