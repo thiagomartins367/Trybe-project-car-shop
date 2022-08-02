@@ -37,6 +37,13 @@ class CarsModel implements IModel<ICar> {
     if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
     return this._model.findById({ _id });
   }
+
+  public async update(_id: string, body: ICar): Promise<ICar | null> {
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
+    return this._model.findByIdAndUpdate(_id, body, {
+      returnDocument: 'after',
+    });
+  }
 }
 
 export default CarsModel;
