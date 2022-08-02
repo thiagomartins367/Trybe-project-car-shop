@@ -28,7 +28,7 @@ class CarsController {
   }
 
   public async delete(req: Request, res: Response) {
-    const result = await this._service.delete(req.params.id);
+    await this._service.delete(req.params.id);
     return res.status(204).end();
   }
 }
