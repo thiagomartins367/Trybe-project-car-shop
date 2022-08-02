@@ -25,6 +25,18 @@ class CarsService implements IService<ICar> {
     }
     return car;
   }
+
+  public async update(_id: string, body: ICar): Promise<ICar | null> {
+    const parsed = mergedSchema.safeParse(body);
+    if (!parsed.success) {
+      throw parsed.error;
+    }
+    const editedCar = await this._carsModel.update(_id, body);
+    if (!editedCar) {
+      throw new Error(ErrorTypes.ObjectNotFound);
+    }
+    return editedCar;
+  }
 }
 
 export default CarsService;
