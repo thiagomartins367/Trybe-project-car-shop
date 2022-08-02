@@ -44,6 +44,11 @@ class CarsModel implements IModel<ICar> {
       returnDocument: 'after',
     });
   }
+
+  public async delete(_id: string): Promise<ICar | null> {
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
+    return this._model.findByIdAndDelete(_id);
+  }
 }
 
 export default CarsModel;
